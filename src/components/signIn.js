@@ -13,6 +13,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { setInterceptor } from './../util/auth.js'
+import { useDispatch, useSelector } from 'react-redux';
+import {addAccessToken, addRefreshToken} from './../store/useSlice.js'
 
 function Copyright(props) {
   return (
@@ -30,6 +32,8 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
+	let state = useSelector((state)=> { return state });
+	let dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -57,6 +61,8 @@ export default function SignIn() {
 			const accessToken = response.data.responseData.accessToken;
 			const refreshToken = response.data.responseData.refreshToken;
 			console.log(accessToken);
+			//dispatch(addAccessToken(accessToken))
+			//dispatch(addRefreshToken(refreshToken))
 			localStorage.setItem('accessToken', `${accessToken}`)
 			localStorage.setItem('refreshToken', `${refreshToken}`)
 			setInterceptor(`${accessToken}`)

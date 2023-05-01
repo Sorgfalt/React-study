@@ -9,6 +9,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 const fetchData = async (accessToken,refreshToken) => {
 	console.log(accessToken);
@@ -34,6 +35,7 @@ const PhoneGrid = () => {
 	const [open, setOpen] = useState(false);
 	const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+	let state = useSelector((state)=> { return state });
 
 	const handleButtonClick = () => {
 		setOpen(true);
@@ -54,6 +56,8 @@ const PhoneGrid = () => {
 	const handleSave = async (event) => {
 		event.preventDefault();
     const data = new FormData(event.currentTarget);
+		//const accessToken = state.user.accessToken
+		//const refreshToken = state.user.refreshToken
 		const accessToken = localStorage.getItem("accessToken");
 		const refreshToken = localStorage.getItem("refreshToken");
 		await axios.post(
